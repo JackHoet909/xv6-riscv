@@ -149,6 +149,8 @@ found:
   //Assigning a default priority value; used 100 for example
   p->stride = 100;
 
+  p->pass = 0; //Initializing the pass value to 0
+
   // Allocate a trapframe page.
   if((p->trapframe = (struct trapframe *)kalloc()) == 0){
     freeproc(p);
@@ -486,8 +488,10 @@ scheduler(void)
 
       if(next_p-> state == RUNNABLE)
       {
-        //Increment the runtime with the process's stride
-        next_p->runtime += next_p->stride;
+        //Increment the pass with the process's stride
+        next_p->pass += next_p->stride;
+
+        next_p->runtime++;     //track the number of times the process has been on the CPU
 
         //Perform the context switch
         next_p->state = RUNNING;

@@ -95,9 +95,11 @@ struct proc {
   //1.
   int runtime; //Tracks the number of times the process has been on the CPU
   int stride; //Priority value
+  int pass; //Pass value to determine next process to run
 
   // wait_lock must be held when using this:
   struct proc *parent;         // Parent process
+  
 
   // these are private to the process, so p->lock need not be held.
   uint64 kstack;               // Virtual address of kernel stack
